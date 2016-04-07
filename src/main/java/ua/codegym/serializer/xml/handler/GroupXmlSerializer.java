@@ -1,4 +1,3 @@
-
 package ua.codegym.serializer.xml.handler;
 
 import ua.codegym.serializer.Serializer;
@@ -12,22 +11,27 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class XmlSerializer implements Serializer {
+public class GroupXmlSerializer implements Serializer{
   private Map<String, Serializer> serializers = new HashMap<>();
 
-  public XmlSerializer() {
+  public GroupXmlSerializer() {
     serializers.put(Square.class.getCanonicalName(), new SquareXmlSerializer());
     serializers.put(Circle.class.getCanonicalName(), new CircleXmlSerializer());
-    serializers.put(Group.class.getCanonicalName(), new GroupXmlSerializer());
+    serializers.put(Group.class.getCanonicalName(), this );
 
   }
 
+  @Override
   public void serialize(Shape shape, OutputStream os) throws IOException {
-    String type = shape.getType();
-    Serializer serializer = serializers.get(type);
-    serializer.serialize(shape, os);
+    Group group = (Group) shape;
 
 
+    os.write("<group>".getBytes());
+
+    for(Shape innerShape : group.getShapes()){
+      Serializer serializer = serializers.get(innerShape.getType());
+      serializer.serialize(innerShape, os);
+    }
+    os.write("</group>".getBytes());
   }
-
 }
