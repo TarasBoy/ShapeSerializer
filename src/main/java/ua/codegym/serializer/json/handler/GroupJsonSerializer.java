@@ -22,10 +22,14 @@ public class GroupJsonSerializer implements Serializer {
   @Override
   public void serialize(Shape shape, OutputStream os) throws IOException {
     Group group = (Group)shape;
+    int size = group.getShapes().size();
+    int counter = 0;
     os.write("{\"group\":[".getBytes());
     for (Shape innerShape : group.getShapes()) {
       Serializer serializer = serializers.get(innerShape.getType());
       serializer.serialize(innerShape,os);
+      counter++;
+      if (counter < size) os.write(",".getBytes());
     }
     os.write("]}".getBytes());
 

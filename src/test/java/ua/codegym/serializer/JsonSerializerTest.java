@@ -26,7 +26,7 @@ public class JsonSerializerTest {
 
     // then
     String output = new String(out.toByteArray());
-    assertEquals("{\"Triangle\":{\"xA\":1,\"yA\":2,\"xB\":3,\"yB\":4,\"xC\":5,\"yC\":6},", output);
+    assertEquals("{\"Triangle\":{\"xA\":1,\"yA\":2,\"xB\":3,\"yB\":4,\"xC\":5,\"yC\":6}", output);
 
 
   }
@@ -43,7 +43,7 @@ public class JsonSerializerTest {
 
     // then
     String output = new String(out.toByteArray());
-    assertEquals("{\"Square\":{\"x\":1,\"y\":2,\"side\":3},", output);
+    assertEquals("{\"Square\":{\"x\":1,\"y\":2,\"side\":3}", output);
 
 
   }
@@ -62,7 +62,7 @@ public class JsonSerializerTest {
 
     // then
     String output = new String(out.toByteArray());
-    assertEquals("{\"group\":[{\"Triangle\":{\"xA\":1,\"yA\":2,\"xB\":3,\"yB\":4,\"xC\":5,\"yC\":6},{\"Square\":{\"x\":1,\"y\":2,\"side\":3},]}", output);
+    assertEquals("{\"group\":[{\"Triangle\":{\"xA\":1,\"yA\":2,\"xB\":3,\"yB\":4,\"xC\":5,\"yC\":6},{\"Square\":{\"x\":1,\"y\":2,\"side\":3}]}", output);
 
 
   }
