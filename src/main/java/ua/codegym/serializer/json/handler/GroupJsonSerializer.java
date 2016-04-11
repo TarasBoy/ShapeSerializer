@@ -11,22 +11,20 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GroupJsonSerializer implements Serializer {
-  private Map<String, Serializer> serializers = new HashMap<>();
+public class GroupJsonSerializer implements Serializer<Group> {
+    private JsonSerializerFactory factory;
 
-  public GroupJsonSerializer() {
-    serializers.put(Square.class.getCanonicalName(), new SquareJsonSerializer());
-    serializers.put(Triangle.class.getCanonicalName(), new TriangleJsonSerializer());
-    serializers.put(Group.class.getCanonicalName(),this);
+  public GroupJsonSerializer(JsonSerializerFactory factory){
+
+    this.factory = factory;
   }
   @Override
-  public void serialize(Shape shape, OutputStream os) throws IOException {
-    Group group = (Group)shape;
+  public void serialize(Group group, OutputStream os) throws IOException {
     int size = group.getShapes().size();
     int counter = 0;
     os.write("{\"group\":[".getBytes());
     for (Shape innerShape : group.getShapes()) {
-      Serializer serializer = serializers.get(innerShape.getType());
+      Serializer serializer = factory.getSerializer(innerShape.getType());
       serializer.serialize(innerShape,os);
       counter++;
       if (counter < size) os.write(",".getBytes());

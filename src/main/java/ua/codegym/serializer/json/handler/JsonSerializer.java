@@ -12,18 +12,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JsonSerializer implements Serializer {
-  private Map<String, Serializer> serializers = new HashMap<>();
 
-  public JsonSerializer() {
-    serializers.put(Square.class.getCanonicalName(), new SquareJsonSerializer());
-    serializers.put(Triangle.class.getCanonicalName(), new TriangleJsonSerializer());
-    serializers.put(Group.class.getCanonicalName(),new GroupJsonSerializer());
+  private JsonSerializerFactory factory;
+
+  public JsonSerializer(JsonSerializerFactory factory){
+
+    this.factory = factory;
   }
 
   @Override
   public void serialize(Shape shape, OutputStream os) throws IOException {
     String type = shape.getType();
-    Serializer serializer = serializers.get(type);
+    Serializer serializer = factory.getSerializer(type);
     serializer.serialize(shape, os);
 
   }

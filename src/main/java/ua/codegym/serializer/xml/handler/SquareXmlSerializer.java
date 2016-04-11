@@ -7,11 +7,10 @@ import ua.codegym.serializer.shape.Square;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class SquareXmlSerializer implements Serializer{
+public class SquareXmlSerializer implements Serializer<Square>{
 
   @Override
-  public void serialize(Shape shape, OutputStream os) throws IOException {
-    Square square = (Square)shape;
+  public void serialize(Square square, OutputStream os) throws IOException {
     int x = square.getX();
     int y = square.getY();
     int side = square.getSide();

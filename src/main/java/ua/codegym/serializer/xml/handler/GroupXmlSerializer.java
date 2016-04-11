@@ -11,25 +11,20 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GroupXmlSerializer implements Serializer{
-  private Map<String, Serializer> serializers = new HashMap<>();
+public class GroupXmlSerializer implements Serializer<Group>{
+   private XmlSerializerFactory factory;
 
-  public GroupXmlSerializer() {
-    serializers.put(Square.class.getCanonicalName(), new SquareXmlSerializer());
-    serializers.put(Circle.class.getCanonicalName(), new CircleXmlSerializer());
-    serializers.put(Group.class.getCanonicalName(), this );
+  public GroupXmlSerializer(XmlSerializerFactory factory) {
 
+    this.factory = factory;
   }
 
   @Override
-  public void serialize(Shape shape, OutputStream os) throws IOException {
-    Group group = (Group) shape;
-
-
+  public void serialize(Group group, OutputStream os) throws IOException {
     os.write("<group>".getBytes());
 
     for(Shape innerShape : group.getShapes()){
-      Serializer serializer = serializers.get(innerShape.getType());
+      Serializer serializer =factory.getSerrializer(innerShape.getType());
       serializer.serialize(innerShape, os);
     }
     os.write("</group>".getBytes());

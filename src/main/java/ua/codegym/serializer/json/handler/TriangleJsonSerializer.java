@@ -7,10 +7,9 @@ import ua.codegym.serializer.shape.Triangle;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class TriangleJsonSerializer implements Serializer {
+public class TriangleJsonSerializer implements Serializer<Triangle> {
   @Override
-  public void serialize(Shape shape, OutputStream os) throws IOException {
-    Triangle triangle = (Triangle)shape;
+  public void serialize(Triangle triangle, OutputStream os) throws IOException {
     int xA = triangle.getxA();
     int yA = triangle.getyA();
     int xB = triangle.getxB();
